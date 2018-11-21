@@ -1,75 +1,78 @@
-import * as React from 'react';
+import * as React from "react";
 
 interface Props {
-	from: string
-	to: string
-	validate: (entry: { from: string, to: string }) => boolean
-	onSubmit: (entry: { from: string, to: string }) => void
-	onDelete?: (entry: { from: string, to: string }) => void
+  from: string;
+  to: string;
+  validate: (entry: { from: string; to: string }) => boolean;
+  onSubmit: (entry: { from: string; to: string }) => void;
+  onDelete?: (entry: { from: string; to: string }) => void;
 }
 
 interface State {
-	from: string
-  to: string
-  invalid: boolean
+  from: string;
+  to: string;
+  invalid: boolean;
 }
 
 class DictionaryEntryForm extends React.Component<Props, State> {
-	state = {
-		from: '',
-    to: '',
+  state = {
+    from: "",
+    to: "",
     invalid: false
-	}
+  };
 
-	reset = () => {
-		const { from, to } = this.props;
+  reset = () => {
+    const { from, to } = this.props;
 
-		this.setState({ from, to });
-	}
+    this.setState({ from, to });
+  };
 
-	handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.currentTarget;
+  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
 
-		this.setState(state => ({
-			...state,
-			[name]: value
-		}), () => {
-      const { from, to } = this.state;
+    this.setState(
+      state => ({
+        ...state,
+        [name]: value
+      }),
+      () => {
+        const { from, to } = this.state;
 
-      this.setState({ invalid: !this.props.validate({ from, to }) });
-    });
-	}
+        this.setState({ invalid: !this.props.validate({ from, to }) });
+      }
+    );
+  };
 
-	handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		const { from, to } = this.state;
-		const entry = { from, to };
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { from, to } = this.state;
+    const entry = { from, to };
 
-		if (this.props.validate(entry)) {
-			this.props.onSubmit(entry);
-		} else {
-      alert('invalid')
+    if (this.props.validate(entry)) {
+      this.props.onSubmit(entry);
+    } else {
+      alert("invalid");
     }
-	}
+  };
 
-	handleDelete = () => {
-		const { onDelete, from, to } = this.props;
+  handleDelete = () => {
+    const { onDelete, from, to } = this.props;
 
-		if (onDelete) {
-			onDelete({ from, to });
-		}
-	}
+    if (onDelete) {
+      onDelete({ from, to });
+    }
+  };
 
-	componentDidMount() {
-		this.reset();
-	}
+  componentDidMount() {
+    this.reset();
+  }
 
-	render() {
-		const { from, to, invalid } = this.state;
-		const { onDelete } = this.props;
+  render() {
+    const { from, to, invalid } = this.state;
+    const { onDelete } = this.props;
 
-		return (
-			<form onSubmit={this.handleSubmit} className="columns">
+    return (
+      <form onSubmit={this.handleSubmit} className="columns">
         <div className="column">
           <div className="field has-addons">
             <div className="control is-expanded">
@@ -77,7 +80,7 @@ class DictionaryEntryForm extends React.Component<Props, State> {
                 name="from"
                 type="text"
                 value={from}
-                className={['input', invalid && 'is-danger'].join(' ')}
+                className={["input", invalid && "is-danger"].join(" ")}
                 required
                 onChange={this.handleInputChange}
               />
@@ -101,20 +104,28 @@ class DictionaryEntryForm extends React.Component<Props, State> {
         </div>
 
         <div className="column is-narrow">
-          <button type="submit" className="button is-primary" disabled={invalid}>
+          <button
+            type="submit"
+            className="button is-primary"
+            disabled={invalid}
+          >
             <span className="icon">
               <i className="fas fa-save" />
             </span>
           </button>
-          <button onClick={this.handleDelete} className="button is-danger" style={{ visibility: onDelete ? 'visible' : 'hidden' }}>
+          <button
+            onClick={this.handleDelete}
+            className="button is-danger"
+            style={{ visibility: onDelete ? "visible" : "hidden" }}
+          >
             <span className="icon">
               <i className="fas fa-trash" />
             </span>
           </button>
         </div>
-			</form>
-		)
-	}
+      </form>
+    );
+  }
 }
 
 export { DictionaryEntryForm };

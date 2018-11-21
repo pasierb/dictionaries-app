@@ -3,15 +3,15 @@ import {
   createDictionaryAction,
   deleteDictionaryAction,
   dictionaries
-} from './store';
-import { createDictionary, cloneDictionary } from './models';
+} from "./store";
+import { createDictionary, cloneDictionary } from "./models";
 
-export default describe('store', () => {
-  describe('dictionaries reducer', () => {
-    describe('updateDictionaryAction', () => {
-      it('should update dictionary', () => {
-        const d1 = createDictionary('one');
-        const d2 = createDictionary('two');
+export default describe("store", () => {
+  describe("dictionaries reducer", () => {
+    describe("updateDictionaryAction", () => {
+      it("should update dictionary", () => {
+        const d1 = createDictionary("one");
+        const d2 = createDictionary("two");
         const d2clone = cloneDictionary(d2);
 
         const state = dictionaries([d1, d2], updateDictionaryAction(d2clone));
@@ -20,11 +20,11 @@ export default describe('store', () => {
       });
     });
 
-    describe('deleteDictionaryAction', () => {
-      it('should remove dictionary from store', () => {
-        const d1 = createDictionary('one');
-        const d2 = createDictionary('two');
-        const d3 = createDictionary('three');
+    describe("deleteDictionaryAction", () => {
+      it("should remove dictionary from store", () => {
+        const d1 = createDictionary("one");
+        const d2 = createDictionary("two");
+        const d3 = createDictionary("three");
 
         const state = dictionaries([d1, d2, d3], deleteDictionaryAction(d2));
 
@@ -33,9 +33,9 @@ export default describe('store', () => {
       });
     });
 
-    describe('createDictionaryAction', () => {
-      it('should add dictionary to store', () => {
-        const name = 'Foo';
+    describe("createDictionaryAction", () => {
+      it("should add dictionary to store", () => {
+        const name = "Foo";
 
         const state = dictionaries([], createDictionaryAction(name));
 
@@ -43,5 +43,5 @@ export default describe('store', () => {
         expect(state[0].name).toBe(name);
       });
     });
-  })
-})
+  });
+});
